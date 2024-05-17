@@ -1,0 +1,28 @@
+﻿@page "/"
+@inject IJSRuntime js
+
+<PageTitle>Página inicial</PageTitle>
+
+<h1>Hello, world!</h1>
+
+<button @onclick="@HandleClick">Diga olá</button>
+
+@code {
+
+    private async void HandleClick()
+    {
+        var message = await GetGreeting("Henrique");
+        Alert(message);
+    }
+
+    private void Alert(string message)
+    {
+        js.InvokeVoidAsync("alert", message);
+    }
+
+    private ValueTask<string> GetGreeting(string name)
+    {
+        return js.InvokeAsync<string>("getGreeting", name);
+    }
+
+}
